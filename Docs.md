@@ -8,12 +8,11 @@ This documentation explains how the Linoria library works, its structure, and ho
 ---
 
 ## Installation
-To use Linoria, you need to import the library and its associated components. Linoria is dynamically loaded using the `loadstring` function to fetch Lua scripts from a remote repository. For type safety, it integrates with TypeScript through typings.
+
+### Fetching the Library
+Linoria is dynamically loaded using the `loadstring` function to fetch Lua scripts from a remote repository. Use the following code to fetch and initialize the library and its components:
 
 ```typescript
-import {Linoria} from "pathtofile";
-import { Elements, Library } from "pathtofile";
-
 const repo = "https://raw.githubusercontent.com/scripts-ts/LinoriaLib/main/out/";
 
 const {
@@ -42,14 +41,23 @@ const savemanager = loadstring(game.HttpGet(repo + "addons/savemanager.lua"))();
 const thememanager = loadstring(game.HttpGet(repo + "addons/thememanager.lua"))();
 ```
 
+### Setting Up TypeScript Typings
+For enhanced type safety, integrate Linoria's TypeScript typings into your project:
+
+```typescript
+import { Linoria } from "path-to-typings";
+```
+
+This ensures that all dynamically loaded components conform to their expected structures, enabling autocompletion and type checking in your editor.
+
 ---
 
 ## Structure
 
 ### Components
-Linoria provides a wide range of components, each designed for a specific UI feature. The components include:
+Linoria provides a wide range of components for building UIs:
 
-- **Builder**: Initializes and constructs UI elements.
+- **Builder**: Initializes and constructs the UI structure.
 - **Window**: Represents a UI window with customizable properties.
 - **Page**: A container for grouping related UI elements.
 - **ThemeSection**: Manages theme-related settings.
@@ -68,348 +76,146 @@ Linoria provides a wide range of components, each designed for a specific UI fea
 - **KeyPicker**: Configures key bindings.
 - **ColorPicker**: Provides color selection tools.
 
-### Typings
-Linoria integrates with TypeScript for better type safety. The `typeof Linoria` type describes the structure of the module being dynamically loaded.
-
-```typescript
-import {Linoria} from "pathtofile";
-
-const {
-    Builder,
-    Window,
-    Page,
-    ...
-} = loadstring(game.HttpGet(repo + "init.lua"))() as typeof Linoria;
-```
-
-The `typeof Linoria` typing ensures that components dynamically loaded at runtime conform to the expected structure. This prevents misuse and enables code autocompletion and type checking in editors.
-
 ---
 
 ## Usage
 
 ### Creating a Basic UI
-```typescript
-new Builder()
-	.root("brickmane_hub", "sexy jade")
-	.library(library)
-	.withSaveManager(savemanager)
-	.withThemeManager(thememanager)
-	.windows([
-		new Window()
-			.title("Brickmane Hub | sexy jade")
-			.centered(true)
-			.autoShow(true)
-			.withFadeTime(0)
-			.pages([new Page().title("Gameplay").left([new Groupbox().title("Silent Aim SEXY!!11")])]),
-	])
-	.renderUI();
-
-```
-
-### Adding a Toggle
-```typescript
-declare const Toggles: Toggles;
-
-new Builder()
-	.root("brickmane_hub", "sexy jade")
-	.library(library)
-	.withSaveManager(savemanager)
-	.withThemeManager(thememanager)
-	.windows([
-		new Window()
-			.title("Brickmane Hub | sexy jade")
-			.centered(true)
-			.autoShow(true)
-			.withFadeTime(0)
-			.pages([
-				new Page()
-					.title("Gameplay")
-					.left([
-						new Groupbox()
-							.title("Silent Aim SEXY!!11")
-							.elements([
-								new Toggle("gameplay.ranged.silentaim")
-									.title("Enabled")
-									.tooltip("shoots silently (WOOWWW NO SHIT!)")
-									.default(false),
-							]),
-					]),
-			]),
-	])
-	.renderUI();
-
-interface Toggles {
-	"gameplay.ranged.silentaim": Elements.Toggle;
-}
-```
-
-### Adding a Key Picker
-```typescript
-declare const Toggles: Toggles;
-declare const Options: Options;
-
-new Builder()
-	.root("brickmane_hub", "sexy jade")
-	.library(library)
-	.withSaveManager(savemanager)
-	.withThemeManager(thememanager)
-	.windows([
-		new Window()
-			.title("Brickmane Hub | sexy jade")
-			.centered(true)
-			.autoShow(true)
-			.withFadeTime(0)
-			.pages([
-				new Page().title("Gameplay").left([
-					new Groupbox().title("Silent Aim SEXY!!11").elements([
-						new Toggle("gameplay.ranged.silentaim")
-							.title("Enabled")
-							.tooltip("shoots silently (WOOWWW NO SHIT!)")
-							.default(false)
-							.extensions([
-								new KeyPicker("gameplay.ranged.silentaim_key")
-									.title("Silent Aim")
-									.bind("T")
-									.mode("Hold"),
-							]),
-					]),
-				]),
-			]),
-	])
-	.renderUI();
-
-interface Toggles {
-	"gameplay.ranged.silentaim": Elements.Toggle;
-}
-
-interface Options {
-	"gameplay.ranged.silentaim_key": Elements.KeyPicker;
-}
-```
-
-### Using Dependencies
-```typescript
-declare const Toggles: Toggles;
-declare const Options: Options;
-
-new Builder()
-	.root("brickmane_hub", "sexy jade")
-	.library(library)
-	.withSaveManager(savemanager)
-	.withThemeManager(thememanager)
-	.windows([
-		new Window()
-			.title("Brickmane Hub | sexy jade")
-			.centered(true)
-			.autoShow(true)
-			.withFadeTime(0)
-			.pages([
-				new Page().title("Gameplay").left([
-					new Groupbox().title("Silent Aim SEXY!!11").elements([
-						new Toggle("gameplay.ranged.silentaim")
-							.title("Enabled")
-							.tooltip("shoots silently (WOOWWW NO SHIT!)")
-							.default(false)
-							.extensions([
-								new KeyPicker("gameplay.ranged.silentaim_key")
-									.title("Silent Aim")
-									.bind("T")
-									.mode("Hold"),
-							]),
-						new DependencyBox()
-							.dependsOn("gameplay.ranged.silentaim", true)
-							.elements([
-								new Toggle("gameplay.ranged.silentaimdebugger")
-									.title("Debugger")
-									.tooltip("Enable debug notifications for Silent Aim")
-									.default(true),
-							]),
-					]),
-				]),
-			]),
-	])
-	.renderUI();
-
-interface Toggles {
-	"gameplay.ranged.silentaim": Elements.Toggle;
-}
-
-interface Options {
-	"gameplay.ranged.silentaim_key": Elements.KeyPicker;
-}
-
-```
-
-### Adding a new page
-To add a new page, simply append a `new Page()` instance to the pages array:
+The following example demonstrates how to create a basic UI using Linoria:
 
 ```typescript
 new Builder()
-	.root("brickmane_hub", "sexy jade")
-	.library(library)
-	.withSaveManager(savemanager)
-	.withThemeManager(thememanager)
-	.windows([
-		new Window()
-			.title("Brickmane Hub | sexy jade")
-			.centered(true)
-			.autoShow(true)
-			.withFadeTime(0)
-			.pages([
-				new Page().title("Gameplay").left([
-					new Groupbox().title("Silent Aim SEXY!!11").elements([
-						new Toggle("gameplay.ranged.silentaim")
-							.title("Enabled")
-							.tooltip("shoots silently (WOOWWW NO SHIT!)")
-							.default(false)
-							.extensions([
-								new KeyPicker("gameplay.ranged.silentaim_key")
-									.title("Silent Aim")
-									.bind("T")
-									.mode("Hold"),
-							]),
-						new DependencyBox()
-							.dependsOn("gameplay.ranged.silentaim", true)
-							.elements([
-								new Toggle("gameplay.ranged.silentaimdebugger")
-									.title("Debugger")
-									.tooltip("Enable debug notifications for Silent Aim")
-									.default(true),
-							]),
-					]),
-				]),
-				new Page().title("IdkIforgot").left([
-					new Groupbox().title("Misc WHAT THE FUCK DOES THIS DO!!!/??").elements([
-						new Toggle("gameplay.ranged.auto_parry")
-							.title("Enabled")
-							.tooltip("auto parries the enemies attacks (WOOWWW NO SHIT!)")
-							.default(false)
-							.extensions([
-								new KeyPicker("gameplay.ranged.auto_parrykey")
-									.title("Auto Parry")
-									.bind("F")
-									.mode("Hold"),
-							]),
-						new DependencyBox()
-							.dependsOn("gameplay.ranged.auto_parry", true)
-							.elements([
-								new Toggle("gameplay.ranged.auto_parrydebugger")
-									.title("Debugger")
-									.tooltip("Enable debug notifications for Auto Parry")
-									.default(true),
-							]),
-					]),
-				]),
-			]),
-	])
-	.renderUI();
+    .root("my_hub", "default_theme")
+    .library(library)
+    .withSaveManager(savemanager)
+    .withThemeManager(thememanager)
+    .windows([
+        new Window()
+            .title("My Hub")
+            .centered(true)
+            .autoShow(true)
+            .withFadeTime(0)
+            .pages([
+                new Page().title("Main Page").left([
+                    new Groupbox().title("Features").elements([
+                        new Toggle("features.example")
+                            .title("Example Toggle")
+                            .tooltip("An example toggle feature.")
+                            .default(false),
+                    ]),
+                ]),
+            ]),
+    ])
+    .renderUI();
 ```
 
+### Adding Components
 
-### Final Touches
-This is what it looks like when you are done
+#### Toggle
+A toggle is a switchable button for enabling or disabling a feature:
+
 ```typescript
-import { Elements, Library } from "../../Linoria/library";
-import { Linoria } from "../../Linoria/linoria";
+new Toggle("features.example")
+    .title("Example Feature")
+    .tooltip("Enable or disable this feature.")
+    .default(false);
+```
 
-declare const Toggles: Toggles;
-declare const Options: Options;
+#### Key Picker
+A key picker binds specific keys to actions in your script:
 
+```typescript
+new KeyPicker("features.example_key")
+    .title("Example Key")
+    .bind("T")
+    .mode("Hold");
+```
+
+#### Dependency Box
+Use a dependency box to conditionally display elements:
+
+```typescript
+new DependencyBox()
+    .dependsOn("features.example", true)
+    .elements([
+        new Toggle("features.example_debugger")
+            .title("Enable Debugger")
+            .tooltip("Show debug notifications.")
+            .default(true),
+    ]);
+```
+
+### Adding a New Page
+To add a new page, append a `new Page()` instance to the pages array:
+
+```typescript
+new Page().title("Settings").left([
+    new Groupbox().title("Options").elements([
+        new Toggle("settings.auto_save")
+            .title("Auto Save")
+            .default(true),
+    ]),
+]);
+```
+
+---
+
+## Full Example
+Here is a complete example demonstrating Linoria's capabilities:
+
+```typescript
 const repo = "https://raw.githubusercontent.com/scripts-ts/LinoriaLib/main/out/";
 
 const {
-	Builder,
-	Window,
-	Page,
-	ThemeSection,
-	ConfigSection,
-	Groupbox,
-	Tabbox,
-	Tab,
-	DependencyBox,
-	Label,
-	Toggle,
-	Slider,
-	Dropdown,
-	MultiDropdown,
-	Divider,
-	Spacer,
-	KeyPicker,
-	ColorPicker,
-} = loadstring(game.HttpGet(repo + "init.lua"))() as typeof Linoria; // Dynamically load Linoria and assert its type
-const library = loadstring(game.HttpGet(repo + "library.lua"))() as Library; // Load the library with a type assertion
+    Builder,
+    Window,
+    Page,
+    Groupbox,
+    Toggle,
+    KeyPicker,
+    DependencyBox,
+} = loadstring(game.HttpGet(repo + "init.lua"))() as typeof Linoria;
+const library = loadstring(game.HttpGet(repo + "library.lua"))() as Library;
 const savemanager = loadstring(game.HttpGet(repo + "addons/savemanager.lua"))();
 const thememanager = loadstring(game.HttpGet(repo + "addons/thememanager.lua"))();
 
 new Builder()
-	.root("brickmane_hub", "sexy jade")
-	.library(library)
-	.withSaveManager(savemanager)
-	.withThemeManager(thememanager)
-	.windows([
-		new Window()
-			.title("Brickmane Hub | sexy jade")
-			.centered(true)
-			.autoShow(true)
-			.withFadeTime(0)
-			.pages([
-				new Page().title("Gameplay").left([
-					new Groupbox().title("Silent Aim SEXY!!11").elements([
-						new Toggle("gameplay.ranged.silentaim")
-							.title("Enabled")
-							.tooltip("shoots silently (WOOWWW NO SHIT!)")
-							.default(false)
-							.extensions([
-								new KeyPicker("gameplay.ranged.silentaim_key")
-									.title("Silent Aim")
-									.bind("T")
-									.mode("Hold"),
-							]),
-						new DependencyBox()
-							.dependsOn("gameplay.ranged.silentaim", true)
-							.elements([
-								new Toggle("gameplay.ranged.silentaimdebugger")
-									.title("Debugger")
-									.tooltip("Enable debug notifications for Silent Aim")
-									.default(true),
-							]),
-					]),
-				]),
-				new Page().title("IdkIforgot").left([
-					new Groupbox().title("Misc WHAT THE FUCK DOES THIS DO!!!/??").elements([
-						new Toggle("gameplay.ranged.auto_parry")
-							.title("Enabled")
-							.tooltip("auto parries the enemies attacks (WOOWWW NO SHIT!)")
-							.default(false)
-							.extensions([
-								new KeyPicker("gameplay.ranged.auto_parrykey")
-									.title("Auto Parry")
-									.bind("F")
-									.mode("Hold"),
-							]),
-						new DependencyBox()
-							.dependsOn("gameplay.ranged.auto_parry", true)
-							.elements([
-								new Toggle("gameplay.ranged.auto_parrydebugger")
-									.title("Debugger")
-									.tooltip("Enable debug notifications for Auto Parry")
-									.default(true),
-							]),
-					]),
-				]),
-			]),
-	])
-	.renderUI();
-
-interface Toggles {
-	"gameplay.ranged.silentaim": Elements.Toggle;
-}
-
-interface Options {
-	"gameplay.ranged.silentaim_key": Elements.KeyPicker;
-}
-
+    .root("example_hub", "default_theme")
+    .library(library)
+    .withSaveManager(savemanager)
+    .withThemeManager(thememanager)
+    .windows([
+        new Window()
+            .title("Example Hub")
+            .centered(true)
+            .autoShow(true)
+            .withFadeTime(0)
+            .pages([
+                new Page().title("Features").left([
+                    new Groupbox().title("Main Features").elements([
+                        new Toggle("features.auto_parry")
+                            .title("Auto Parry")
+                            .tooltip("Automatically parry enemy attacks.")
+                            .default(false)
+                            .extensions([
+                                new KeyPicker("features.auto_parry_key")
+                                    .title("Parry Key")
+                                    .bind("F")
+                                    .mode("Hold"),
+                            ]),
+                        new DependencyBox()
+                            .dependsOn("features.auto_parry", true)
+                            .elements([
+                                new Toggle("features.auto_parry_debugger")
+                                    .title("Enable Debugger")
+                                    .tooltip("Show debug notifications.")
+                                    .default(true),
+                            ]),
+                    ]),
+                ]),
+            ]),
+    ])
+    .renderUI();
 ```
 
 ---
@@ -417,6 +223,4 @@ interface Options {
 ## Additional Resources
 - [GitHub Repository](https://github.com/scripts-ts/LinoriaLib)
 - [Original Linoria UI](https://github.com/violin-suzutsuki/LinoriaLib)
-
----
 
