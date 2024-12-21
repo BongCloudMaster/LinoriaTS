@@ -27,6 +27,14 @@ Outside `compilerOptions`, add:
 ```json
 "include": ["src", "node_modules/@rbxts", "node_modules/@executor-ts"]
 ```
+Add the transformer plugin under `compilerOptions`:
+```json
+"plugins": [
+    {
+        "transform": "executor-ts-transformer"
+    }
+]
+```
 
 Your complete `tsconfig.json` should look similar to this:
 ```json
