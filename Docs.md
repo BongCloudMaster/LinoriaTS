@@ -160,6 +160,48 @@ new Page().title("Settings").left([
 
 ---
 
+### Toggles and Options
+## Overview
+Linoria uses **Toggles** and **Options** to manage configurable UI settings dynamically. These represent states or preferences users can enable, disable, or customize.
+
+## Toggles
+A **Toggle** is used for binary settings (on/off). It includes properties like title, tooltip, and default state.
+
+**Example:**
+```typescript
+declare const Toggles: Toggles;
+
+new Toggle("gameplay.ranged.silentaim")
+    .title("Enabled")
+    .tooltip("Toggle silent aim functionality.")
+    .default(false);
+
+interface Toggles {
+    "gameplay.ranged.silentaim": Elements.Toggle;
+}
+```
+
+---
+
+## Toggles
+An **Option** is used for more advanced settings, such as key bindings or dropdown selections. Options extend components like `KeyPicker` or `Dropdown`.
+
+**Example:**
+```typescript
+declare const Options: Options;
+
+new KeyPicker("gameplay.ranged.silentaim_key")
+    .title("Silent Aim")
+    .bind("T")
+    .mode("Hold");
+
+interface Options {
+    "gameplay.ranged.silentaim_key": Elements.KeyPicker;
+}
+```
+
+---
+
 ## Full Example
 Here is a complete example demonstrating Linoria's capabilities:
 
@@ -179,43 +221,54 @@ const library = loadstring(game.HttpGet(repo + "library.lua"))() as Library;
 const savemanager = loadstring(game.HttpGet(repo + "addons/savemanager.lua"))();
 const thememanager = loadstring(game.HttpGet(repo + "addons/thememanager.lua"))();
 
+declare const Toggles: Toggles;
+declare const Options: Options;
+
 new Builder()
-    .root("example_hub", "default_theme")
+    .root("hub_name", "UI Description")
     .library(library)
     .withSaveManager(savemanager)
     .withThemeManager(thememanager)
     .windows([
         new Window()
-            .title("Example Hub")
+            .title("Hub Name | Description")
             .centered(true)
             .autoShow(true)
-            .withFadeTime(0)
             .pages([
-                new Page().title("Features").left([
-                    new Groupbox().title("Main Features").elements([
-                        new Toggle("features.auto_parry")
-                            .title("Auto Parry")
-                            .tooltip("Automatically parry enemy attacks.")
-                            .default(false)
-                            .extensions([
-                                new KeyPicker("features.auto_parry_key")
-                                    .title("Parry Key")
-                                    .bind("F")
-                                    .mode("Hold"),
-                            ]),
-                        new DependencyBox()
-                            .dependsOn("features.auto_parry", true)
-                            .elements([
-                                new Toggle("features.auto_parry_debugger")
-                                    .title("Enable Debugger")
-                                    .tooltip("Show debug notifications.")
-                                    .default(true),
-                            ]),
+                new Page()
+                    .title("Main Features")
+                    .left([
+                        new Groupbox().title("Gameplay").elements([
+                            new Toggle("gameplay.ranged.silentaim")
+                                .title("Silent Aim")
+                                .default(false)
+                                .extensions([
+                                    new KeyPicker("gameplay.ranged.silentaim_key")
+                                        .title("Silent Aim Key")
+                                        .bind("T")
+                                        .mode("Hold"),
+                                ]),
+                        ]),
                     ]),
-                ]),
+                new Page()
+                    .title("Settings")
+                    .left([
+                        new Groupbox().title("Advanced Options").elements([
+                            new Toggle("settings.auto_save").title("Auto Save").default(true),
+                        ]),
+                    ]),
             ]),
     ])
     .renderUI();
+
+interface Toggles {
+    "gameplay.ranged.silentaim": Elements.Toggle;
+}
+
+interface Options {
+    "gameplay.ranged.silentaim_key": Elements.KeyPicker;
+}
+
 ```
 
 ---
