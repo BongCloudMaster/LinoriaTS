@@ -70,7 +70,7 @@ Your complete `tsconfig.json` should look similar to this:
 
 ## Installation
 
-To use Linoria, you need to import the library and its associated components. Linoria is dynamically loaded using the `loadstring` function to fetch Lua scripts from a remote repository. For type safety, it integrates with TypeScript through typings.
+To use Linoria, you need to import the library and its associated components. By putting the folder into your project folder.
 
 ```typescript
 const repo = "https://raw.githubusercontent.com/scripts-ts/LinoriaLib/main/out/";
