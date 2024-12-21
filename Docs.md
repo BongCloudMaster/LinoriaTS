@@ -109,6 +109,8 @@ new Builder()
 
 ### Adding a Toggle
 ```typescript
+declare const Toggles: Toggles;
+
 new Builder()
 	.root("brickmane_hub", "sexy jade")
 	.library(library)
@@ -136,10 +138,17 @@ new Builder()
 			]),
 	])
 	.renderUI();
+
+interface Toggles {
+	"gameplay.ranged.silentaim": Elements.Toggle;
+}
 ```
 
 ### Adding a Key Picker
 ```typescript
+declare const Toggles: Toggles;
+declare const Options: Options;
+
 new Builder()
 	.root("brickmane_hub", "sexy jade")
 	.library(library)
@@ -169,10 +178,21 @@ new Builder()
 			]),
 	])
 	.renderUI();
+
+interface Toggles {
+	"gameplay.ranged.silentaim": Elements.Toggle;
+}
+
+interface Options {
+	"gameplay.ranged.silentaim_key": Elements.KeyPicker;
+}
 ```
 
 ### Using Dependencies
 ```typescript
+declare const Toggles: Toggles;
+declare const Options: Options;
+
 new Builder()
 	.root("brickmane_hub", "sexy jade")
 	.library(library)
@@ -210,6 +230,15 @@ new Builder()
 			]),
 	])
 	.renderUI();
+
+interface Toggles {
+	"gameplay.ranged.silentaim": Elements.Toggle;
+}
+
+interface Options {
+	"gameplay.ranged.silentaim_key": Elements.KeyPicker;
+}
+
 ```
 
 ---
