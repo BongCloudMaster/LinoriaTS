@@ -70,7 +70,13 @@ Your complete `tsconfig.json` should look similar to this:
 
 ## Installation
 
-To use Linoria, you need to import the library and its associated components. By putting the folder into your project folder.
+To use Linoria, the Linoria folder must be included in your project directory before running the `loadstring` function. 
+This ensures that the TypeScript typings are correctly loaded.
+
+Steps to set up:
+
+Download the Linoria library folder and include it in your project directory.
+Load Linoria dynamically using the `loadstring` function as follows:
 
 ```typescript
 const repo = "https://raw.githubusercontent.com/scripts-ts/LinoriaLib/main/out/";
