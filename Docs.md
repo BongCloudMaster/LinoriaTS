@@ -274,6 +274,10 @@ interface Options {
 ---
 
 ## Additional Resources
-- [GitHub Repository](https://github.com/scripts-ts/LinoriaLib)
-- [Original Linoria UI](https://github.com/violin-suzutsuki/LinoriaLib)
+
+- **GitHub Repository for TypeScript Version**: [scripts-ts/LinoriaLib](https://github.com/scripts-ts/LinoriaLib)  
+  *Developed by [TerminalVibes](https://github.com/TerminalVibes), this version adds TypeScript typings and features to the original Linoria library for improved type safety and developer experience.*  
+
+- **GitHub Repository for Original Lua Version**: [violin-suzutsuki/LinoriaLib](https://github.com/violin-suzutsuki/LinoriaLib)  
+  *Created by [violin-suzutsuki](https://github.com/violin-suzutsuki), the original Linoria library provides a powerful Lua-based framework for constructing Roblox user interfaces.*  
 
