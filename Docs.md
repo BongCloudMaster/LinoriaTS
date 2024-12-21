@@ -166,5 +166,3 @@ thememanager.ApplyTheme("DarkTheme");
 
 ---
 
-This documentation should help you understand and utilize Linoria effectively in your Roblox projects.
-
