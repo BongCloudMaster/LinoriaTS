@@ -9,6 +9,62 @@ This documentation explains how the Linoria library works, its structure, and ho
 
 ## Installation
 
+## Dependencies
+Before using Linoria, ensure that you have the required dependencies installed. Use the following commands to install them via npm:
+
+```bash
+npm i @executor-ts/services@latest
+npm i @executor-ts/types@latest
+npm i -D executor-ts-transformer@latest
+```
+
+## `tsconfig.json` SetUp
+To ensure proper integration with Linoria and the required dependencies, modify your `tsconfig.json` file as follows:
+Inside `typeRoots`, add:
+```json
+"typeRoots": ["node_modules/@rbxts", "node_modules/@executor-ts"]
+```
+Outside `compilerOptions`, add:
+```json
+"include": ["src", "node_modules/@rbxts", "node_modules/@executor-ts"]
+```
+Your complete `tsconfig.json` should look similar to this:
+```json
+{
+	"compilerOptions": {
+		// required
+		"allowSyntheticDefaultImports": true,
+		"downlevelIteration": true,
+		"jsx": "react",
+		"jsxFactory": "Roact.createElement",
+		"jsxFragmentFactory": "Roact.createFragment",
+		"module": "commonjs",
+		"moduleResolution": "Node",
+		"noLib": true,
+		"resolveJsonModule": true,
+		"experimentalDecorators": true,
+		"forceConsistentCasingInFileNames": true,
+		"moduleDetection": "force",
+		"strict": true,
+		"target": "ESNext",
+		"typeRoots": ["node_modules/@rbxts", "node_modules/@executor-ts"],
+
+		// configurable
+		"rootDir": "src",
+		"outDir": "out",
+		"baseUrl": "src",
+		"incremental": true,
+		"tsBuildInfoFile": "out/tsconfig.tsbuildinfo",
+
+		"plugins": [
+			{
+				"transform": "executor-ts-transformer"
+			}
+		]
+	},
+	"include": ["src", "node_modules/@rbxts", "node_modules/@executor-ts"]
+}
+```
 ### Fetching the Library
 Linoria is dynamically loaded using the `loadstring` function to fetch Lua scripts from a remote repository. Use the following code to fetch and initialize the library and its components:
 
