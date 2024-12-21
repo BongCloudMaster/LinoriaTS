@@ -16,16 +16,18 @@ npm i @executor-ts/types@latest
 npm i -D executor-ts-transformer@latest
 ```
 
-## `tsconfig.json` SetUp
+## `tsconfig.json` Setup
 To ensure proper integration with Linoria and the required dependencies, modify your `tsconfig.json` file as follows:
 Inside `typeRoots`, add:
 ```json
 "typeRoots": ["node_modules/@rbxts", "node_modules/@executor-ts"]
 ```
+
 Outside `compilerOptions`, add:
 ```json
 "include": ["src", "node_modules/@rbxts", "node_modules/@executor-ts"]
 ```
+
 Your complete `tsconfig.json` should look similar to this:
 ```json
 {
@@ -63,6 +65,9 @@ Your complete `tsconfig.json` should look similar to this:
 	"include": ["src", "node_modules/@rbxts", "node_modules/@executor-ts"]
 }
 ```
+
+---
+
 ## Installation
 
 To use Linoria, you need to import the library and its associated components. Linoria is dynamically loaded using the `loadstring` function to fetch Lua scripts from a remote repository. For type safety, it integrates with TypeScript through typings.
