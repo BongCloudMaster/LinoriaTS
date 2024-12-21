@@ -7,9 +7,7 @@ This documentation explains how the Linoria library works, its structure, and ho
 
 ---
 
-## Installation
-
-## Dependencies
+## Setup
 Before using Linoria, ensure that you have the required dependencies installed. Use the following commands to install them via npm:
 
 ```bash
@@ -65,8 +63,9 @@ Your complete `tsconfig.json` should look similar to this:
 	"include": ["src", "node_modules/@rbxts", "node_modules/@executor-ts"]
 }
 ```
-### Fetching the Library
-Linoria is dynamically loaded using the `loadstring` function to fetch Lua scripts from a remote repository. Use the following code to fetch and initialize the library and its components:
+## Installation
+
+To use Linoria, you need to import the library and its associated components. Linoria is dynamically loaded using the `loadstring` function to fetch Lua scripts from a remote repository. For type safety, it integrates with TypeScript through typings.
 
 ```typescript
 const repo = "https://raw.githubusercontent.com/scripts-ts/LinoriaLib/main/out/";
