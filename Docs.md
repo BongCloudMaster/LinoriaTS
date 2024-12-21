@@ -307,6 +307,111 @@ new Builder()
 ```
 
 
+### Final Touches
+This is what it looks like when you are done
+```typescript
+import { Elements, Library } from "../../Linoria/library";
+import { Linoria } from "../../Linoria/linoria";
+
+declare const Toggles: Toggles;
+declare const Options: Options;
+
+const repo = "https://raw.githubusercontent.com/scripts-ts/LinoriaLib/main/out/";
+
+const {
+	Builder,
+	Window,
+	Page,
+	ThemeSection,
+	ConfigSection,
+	Groupbox,
+	Tabbox,
+	Tab,
+	DependencyBox,
+	Label,
+	Toggle,
+	Slider,
+	Dropdown,
+	MultiDropdown,
+	Divider,
+	Spacer,
+	KeyPicker,
+	ColorPicker,
+} = loadstring(game.HttpGet(repo + "init.lua"))() as typeof Linoria; // Dynamically load Linoria and assert its type
+const library = loadstring(game.HttpGet(repo + "library.lua"))() as Library; // Load the library with a type assertion
+const savemanager = loadstring(game.HttpGet(repo + "addons/savemanager.lua"))();
+const thememanager = loadstring(game.HttpGet(repo + "addons/thememanager.lua"))();
+
+new Builder()
+	.root("brickmane_hub", "sexy jade")
+	.library(library)
+	.withSaveManager(savemanager)
+	.withThemeManager(thememanager)
+	.windows([
+		new Window()
+			.title("Brickmane Hub | sexy jade")
+			.centered(true)
+			.autoShow(true)
+			.withFadeTime(0)
+			.pages([
+				new Page().title("Gameplay").left([
+					new Groupbox().title("Silent Aim SEXY!!11").elements([
+						new Toggle("gameplay.ranged.silentaim")
+							.title("Enabled")
+							.tooltip("shoots silently (WOOWWW NO SHIT!)")
+							.default(false)
+							.extensions([
+								new KeyPicker("gameplay.ranged.silentaim_key")
+									.title("Silent Aim")
+									.bind("T")
+									.mode("Hold"),
+							]),
+						new DependencyBox()
+							.dependsOn("gameplay.ranged.silentaim", true)
+							.elements([
+								new Toggle("gameplay.ranged.silentaimdebugger")
+									.title("Debugger")
+									.tooltip("Enable debug notifications for Silent Aim")
+									.default(true),
+							]),
+					]),
+				]),
+				new Page().title("IdkIforgot").left([
+					new Groupbox().title("Misc WHAT THE FUCK DOES THIS DO!!!/??").elements([
+						new Toggle("gameplay.ranged.auto_parry")
+							.title("Enabled")
+							.tooltip("auto parries the enemies attacks (WOOWWW NO SHIT!)")
+							.default(false)
+							.extensions([
+								new KeyPicker("gameplay.ranged.auto_parrykey")
+									.title("Auto Parry")
+									.bind("F")
+									.mode("Hold"),
+							]),
+						new DependencyBox()
+							.dependsOn("gameplay.ranged.auto_parry", true)
+							.elements([
+								new Toggle("gameplay.ranged.auto_parrydebugger")
+									.title("Debugger")
+									.tooltip("Enable debug notifications for Auto Parry")
+									.default(true),
+							]),
+					]),
+				]),
+			]),
+	])
+	.renderUI();
+
+interface Toggles {
+	"gameplay.ranged.silentaim": Elements.Toggle;
+}
+
+interface Options {
+	"gameplay.ranged.silentaim_key": Elements.KeyPicker;
+}
+
+```
+
 ---
 
 ## Additional Resources
