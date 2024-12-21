@@ -3,7 +3,7 @@
 ## Overview
 Linoria is a modular library designed for creating dynamic, configurable UI elements in Roblox scripts. This library provides a robust set of tools and components to construct user interfaces programmatically, with TypeScript typings for added type safety.
 
-This documentation explains how the Linoria library works, its structure, and how to use it effectively.
+This documentation explains how to use it effectively.
 
 ---
 
