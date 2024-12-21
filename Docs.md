@@ -90,73 +90,127 @@ The `typeof Linoria` typing ensures that components dynamically loaded at runtim
 
 ### Creating a Basic UI
 ```typescript
-const window = new Builder()
-    .createWindow({
-        Title: "Example Window",
-        Size: new Vector2(500, 600),
-    });
+new Builder()
+	.root("brickmane_hub", "sexy jade")
+	.library(library)
+	.withSaveManager(savemanager)
+	.withThemeManager(thememanager)
+	.windows([
+		new Window()
+			.title("Brickmane Hub | sexy jade")
+			.centered(true)
+			.autoShow(true)
+			.withFadeTime(0)
+			.pages([new Page().title("Gameplay").left([new Groupbox().title("Silent Aim SEXY!!11")])]),
+	])
+	.renderUI();
 
-const page = window.addPage({ Title: "Main Page" });
-const groupbox = page.addGroupbox({ Title: "Settings" });
+```
 
-groupbox.addToggle({
-    Title: "Enable Feature",
-    Default: false,
-    Callback: (state) => {
-        print(`Feature enabled: ${state}`);
-    },
-});
+### Adding a Toggle
+```typescript
+new Builder()
+	.root("brickmane_hub", "sexy jade")
+	.library(library)
+	.withSaveManager(savemanager)
+	.withThemeManager(thememanager)
+	.windows([
+		new Window()
+			.title("Brickmane Hub | sexy jade")
+			.centered(true)
+			.autoShow(true)
+			.withFadeTime(0)
+			.pages([
+				new Page()
+					.title("Gameplay")
+					.left([
+						new Groupbox()
+							.title("Silent Aim SEXY!!11")
+							.elements([
+								new Toggle("gameplay.ranged.silentaim")
+									.title("Enabled")
+									.tooltip("shoots silently (WOOWWW NO SHIT!)")
+									.default(false),
+							]),
+					]),
+			]),
+	])
+	.renderUI();
 ```
 
 ### Adding a Key Picker
 ```typescript
-const keyPicker = groupbox.addKeyPicker({
-    Default: Enum.KeyCode.F,
-    Mode: "Hold",
-    Callback: (isPressed) => {
-        print(`Key is ${isPressed ? "pressed" : "released"}`);
-    },
-});
+new Builder()
+	.root("brickmane_hub", "sexy jade")
+	.library(library)
+	.withSaveManager(savemanager)
+	.withThemeManager(thememanager)
+	.windows([
+		new Window()
+			.title("Brickmane Hub | sexy jade")
+			.centered(true)
+			.autoShow(true)
+			.withFadeTime(0)
+			.pages([
+				new Page().title("Gameplay").left([
+					new Groupbox().title("Silent Aim SEXY!!11").elements([
+						new Toggle("gameplay.ranged.silentaim")
+							.title("Enabled")
+							.tooltip("shoots silently (WOOWWW NO SHIT!)")
+							.default(false)
+							.extensions([
+								new KeyPicker("gameplay.ranged.silentaim_key")
+									.title("Silent Aim")
+									.bind("T")
+									.mode("Hold"),
+							]),
+					]),
+				]),
+			]),
+	])
+	.renderUI();
 ```
 
 ### Using Dependencies
 ```typescript
-const dependencyBox = groupbox.addDependencyBox({
-    DependsOn: "Enable Feature",
-    Value: true,
-    Elements: [
-        new Label({ Text: "This depends on the toggle being active." })
-    ],
-});
+new Builder()
+	.root("brickmane_hub", "sexy jade")
+	.library(library)
+	.withSaveManager(savemanager)
+	.withThemeManager(thememanager)
+	.windows([
+		new Window()
+			.title("Brickmane Hub | sexy jade")
+			.centered(true)
+			.autoShow(true)
+			.withFadeTime(0)
+			.pages([
+				new Page().title("Gameplay").left([
+					new Groupbox().title("Silent Aim SEXY!!11").elements([
+						new Toggle("gameplay.ranged.silentaim")
+							.title("Enabled")
+							.tooltip("shoots silently (WOOWWW NO SHIT!)")
+							.default(false)
+							.extensions([
+								new KeyPicker("gameplay.ranged.silentaim_key")
+									.title("Silent Aim")
+									.bind("T")
+									.mode("Hold"),
+							]),
+						new DependencyBox()
+							.dependsOn("gameplay.ranged.silentaim", true)
+							.elements([
+								new Toggle("gameplay.ranged.silentaimdebugger")
+									.title("Debugger")
+									.tooltip("Enable debug notifications for Silent Aim")
+									.default(true),
+							]),
+					]),
+				]),
+			]),
+	])
+	.renderUI();
 ```
-
----
-
-## Addons
-
-### SaveManager
-The `savemanager` addon handles saving and loading configurations.
-
-```typescript
-savemanager.SetLibrary(library);
-savemanager.LoadFromFile("config.json");
-savemanager.SaveToFile("config.json");
-```
-
-### ThemeManager
-The `thememanager` addon allows theme customization.
-
-```typescript
-thememanager.SetLibrary(library);
-thememanager.ApplyTheme("DarkTheme");
-```
-
----
-
-## Runtime Considerations
-- **Dynamic Loading**: The `loadstring` function fetches and executes Lua scripts at runtime. Ensure the repository URLs are accessible and the returned data adheres to the expected structure.
-- **Error Handling**: Since TypeScript does not validate runtime structures, mismatches between typings and actual data can result in errors.
-- **Version Control**: Use specific versions of the repository to avoid breaking changes.
 
 ---
 
