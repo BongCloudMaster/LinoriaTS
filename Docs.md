@@ -1,7 +1,7 @@
 # Linoria Documentation
 
 ## Overview
-Linoria is a modular library designed for creating dynamic, configurable UI elements in Roblox games. This library provides a robust set of tools and components to construct user interfaces programmatically, with TypeScript typings for added type safety.
+Linoria is a modular library designed for creating dynamic, configurable UI elements in Roblox scripts. This library provides a robust set of tools and components to construct user interfaces programmatically, with TypeScript typings for added type safety.
 
 This documentation explains how the Linoria library works, its structure, and how to use it effectively.
 
@@ -11,8 +11,8 @@ This documentation explains how the Linoria library works, its structure, and ho
 To use Linoria, you need to import the library and its associated components. Linoria is dynamically loaded using the `loadstring` function to fetch Lua scripts from a remote repository. For type safety, it integrates with TypeScript through typings.
 
 ```typescript
-import type * as Linoria from "@script-ts/linorialib";
-import { Elements, Library } from "@script-ts/linorialib/out/library";
+import {Linoria} from "pathtofile";
+import { Elements, Library } from "pathtofile";
 
 const repo = "https://raw.githubusercontent.com/scripts-ts/LinoriaLib/main/out/";
 
@@ -72,7 +72,7 @@ Linoria provides a wide range of components, each designed for a specific UI fea
 Linoria integrates with TypeScript for better type safety. The `typeof Linoria` type describes the structure of the module being dynamically loaded.
 
 ```typescript
-import type * as Linoria from "@script-ts/linorialib";
+import {Linoria} from "pathtofile";
 
 const {
     Builder,
@@ -162,7 +162,7 @@ thememanager.ApplyTheme("DarkTheme");
 
 ## Additional Resources
 - [GitHub Repository](https://github.com/scripts-ts/LinoriaLib)
-- [Roblox Developer Forum](https://devforum.roblox.com/)
+- [Original Linoria UI](https://github.com/violin-suzutsuki/LinoriaLib)
 
 ---
 
