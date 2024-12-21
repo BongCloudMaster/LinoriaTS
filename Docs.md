@@ -241,6 +241,72 @@ interface Options {
 
 ```
 
+### Adding a new page
+To add a new page, simply append a `new Page()` instance to the pages array:
+
+```typescript
+new Builder()
+	.root("brickmane_hub", "sexy jade")
+	.library(library)
+	.withSaveManager(savemanager)
+	.withThemeManager(thememanager)
+	.windows([
+		new Window()
+			.title("Brickmane Hub | sexy jade")
+			.centered(true)
+			.autoShow(true)
+			.withFadeTime(0)
+			.pages([
+				new Page().title("Gameplay").left([
+					new Groupbox().title("Silent Aim SEXY!!11").elements([
+						new Toggle("gameplay.ranged.silentaim")
+							.title("Enabled")
+							.tooltip("shoots silently (WOOWWW NO SHIT!)")
+							.default(false)
+							.extensions([
+								new KeyPicker("gameplay.ranged.silentaim_key")
+									.title("Silent Aim")
+									.bind("T")
+									.mode("Hold"),
+							]),
+						new DependencyBox()
+							.dependsOn("gameplay.ranged.silentaim", true)
+							.elements([
+								new Toggle("gameplay.ranged.silentaimdebugger")
+									.title("Debugger")
+									.tooltip("Enable debug notifications for Silent Aim")
+									.default(true),
+							]),
+					]),
+				]),
+				new Page().title("IdkIforgot").left([
+					new Groupbox().title("Misc WHAT THE FUCK DOES THIS DO!!!/??").elements([
+						new Toggle("gameplay.ranged.auto_parry")
+							.title("Enabled")
+							.tooltip("auto parries the enemies attacks (WOOWWW NO SHIT!)")
+							.default(false)
+							.extensions([
+								new KeyPicker("gameplay.ranged.auto_parrykey")
+									.title("Auto Parry")
+									.bind("F")
+									.mode("Hold"),
+							]),
+						new DependencyBox()
+							.dependsOn("gameplay.ranged.auto_parry", true)
+							.elements([
+								new Toggle("gameplay.ranged.auto_parrydebugger")
+									.title("Debugger")
+									.tooltip("Enable debug notifications for Auto Parry")
+									.default(true),
+							]),
+					]),
+				]),
+			]),
+	])
+	.renderUI();
+```
+
+
 ---
 
 ## Additional Resources
