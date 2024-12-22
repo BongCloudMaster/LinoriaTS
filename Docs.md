@@ -1,4 +1,5 @@
-# Linoria Documentation
+
+# Linoria TS Documentation
 
 ## Overview
 Linoria is a modular library designed for creating dynamic, configurable UI elements in Roblox scripts. This library provides a robust set of tools and components to construct user interfaces programmatically, with TypeScript typings for added type safety.
@@ -354,4 +355,4 @@ interface Options {
 
 - **GitHub Repository for Original Lua Version**: [violin-suzutsuki/LinoriaLib](https://github.com/violin-suzutsuki/LinoriaLib)  
   *Created by [violin-suzutsuki](https://github.com/violin-suzutsuki), the original Linoria library provides a Lua-based framework for constructing Roblox user interfaces.*  
-
+- This shit is AI Generated so please bear with the confusion :)
